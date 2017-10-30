@@ -1,9 +1,25 @@
 module Clock
 
-let create hours minutes = failwith "You need to implement this function."
+type Clock = int
 
-let add minutes clock = failwith "You need to implement this function."
+let minutesInHour = 60
+let hoursToMinutes hours = hours * minutesInHour
+let minutesInDay = hoursToMinutes 24
 
-let subtract minutes clock = failwith "You need to implement this function."
+let rec clampToDay secs: Clock = 
+    match secs with
+    | s when s < 0 -> minutesInDay + s |> clampToDay
+    | s when s >= minutesInDay -> s - minutesInDay |> clampToDay
+    | s -> s
 
-let display clock = failwith "You need to implement this function."
+let create hours minutes = 
+    hoursToMinutes hours + minutes |> clampToDay
+
+let add minutes clock = 
+    clock + minutes |> clampToDay
+
+let subtract minutes clock =
+    clock - minutes |> clampToDay
+
+let display (clock: Clock) =
+    System.String.Format("{0:00}:{1:00}", (clock / minutesInHour), (clock % minutesInHour))
