@@ -1,31 +1,20 @@
 ﻿module KindergartenGarden
 
-// TODO: define the Plant type
-type Plant =
-    | Grass = 'G'
-    | Clover = 'C'
-    | Radishes = 'R'
-    | Violets = 'V'
+type Plant = 
+| Grass = 'G'
+| Clover = 'C'
+| Violets = 'V'
+| Radishes = 'R'
 
 let students = [
-    "Alice", 
-    "Bob",
-    "Charlie",
-    "David",
-    "Eve",
-    "Fred",
-    "Ginny",
-    "Harriet",
-    "Ileana",
-    "Joseph",
-    "Kincaid",
-    "Larry",
+    "Alice"; "Bob"; "Charlie"; "David"; "Eve"; "Fred"; 
+    "Ginny"; "Harriet"; "Ileana"; "Joseph"; "Kincaid"; "Larry"
 ]
 
-let plants (diagram: string) (student: string) =
-    let rows = diagram.Split '\n'
-    let idx = List.findIndex ((=) student)
+let charToPlant = LanguagePrimitives.EnumOfValue
+let rowToPlants (idx:int) (row:string) = [charToPlant row.[idx]; charToPlant row.[idx + 1]]
 
-    let plantForChar (c: char): Plant = enum c
-
-    Array.map (fun (row: string) -> plantForChar (row.[idx * 2])) rows
+let plants (diagram: string) (student: string): Plant list = 
+    let studentIdx = (List.findIndex ((=) student) students) * 2
+    let rows = diagram.Split('\n') |> Array.toList
+    rows |> List.collect (fun row -> rowToPlants studentIdx row)

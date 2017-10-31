@@ -1,0 +1,7 @@
+language: csharp
+mono: none
+dotnet: 2.0.0
+script:
+  - for i in $( echo */); do
+        (cd $i && dotnet test && cd ..) || break 1
+    done

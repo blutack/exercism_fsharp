@@ -1,19 +1,13 @@
-﻿module HelloWorldTest
+// This file was auto-generated based on version 1.0.0 of the canonical data.
 
-open NUnit.Framework
+module HelloWorldTest
+
+open FsUnit.Xunit
+open Xunit
 
 open HelloWorld
 
-[<Test>]
-let ``No name`` () =
-    Assert.That(hello None, Is.EqualTo("Hello, World!"))
+[<Fact>]
+let ``Say Hi!`` () =
+    hello |> should equal "Hello, World!"
 
-[<Test>]
-[<Ignore("Remove to run test")>]
-let ``Sample name`` () =
-    Assert.That(hello (Some "Alice"), Is.EqualTo("Hello, Alice!"))
-
-[<Test>]
-[<Ignore("Remove to run test")>]
-let ``Other sample name`` () =
-    Assert.That(hello (Some "Bob"), Is.EqualTo("Hello, Bob!"))
